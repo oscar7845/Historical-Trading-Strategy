@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Date;
+
 public class Utils {
 
     public static double getHigh (ArrayList<Double> array) {
@@ -98,6 +100,64 @@ public class Utils {
         double[] levels = {level1, level2, level3};
         return levels;
     }
+
+    public static ArrayList<Double> convertTo1D(ArrayList<double[]> array, int element) {
+        ArrayList<Double> convertedArray = new ArrayList<Double>();
+
+        for(int i = 0; i < array.size(); i ++) {
+            convertedArray.add(array.get(i)[element]);
+        }
+
+            return convertedArray;
+    }
+
+    public static String[] splitString(String action) {
+        String[] parts = action.split("_");
+        return parts;
+    }
+
+    public static String convertDate(double time) {
+        long l = (long) time;
+        Date d = new Date(l);
+        String date = d.toString();
+
+        return date;
+    }
+
+    public static double calculateEMA(ArrayList<Double> array, int period) {
+        //ArrayList<Double> array = new ArrayList<>(array1.subList(array1.size()-50, array1.size()));
+        double ema = 0;
+        double doublePeriod = period;
+        double multiplier = 2 / (doublePeriod + 1.0);
+        ArrayList<Double> tempArray = new ArrayList<>();
+
+        for (int i = 0; i < array.size(); i++) {
+            if (i < period+1) {
+                tempArray.add(array.get(i));
+
+                if (tempArray.size() == period) {
+                    ema = calculateMovingAverage(tempArray);
+                    tempArray.clear();
+                }
+            }
+            else {
+                double currentClose = array.get(i);
+                ema = ((currentClose- ema) * multiplier) + ema;
+            }
+
+        }
+
+        return ema;
+    }
+
+    public static double calculateMACDhist(ArrayList<Double> array) {
+
+    }
+
+    public static double calculateATR(ArrayList<double[]> array) {
+
+    }
+
 
 
 }
