@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 
 public class Simulator {
@@ -14,7 +17,7 @@ public class Simulator {
 
         System.out.println("Simulation starting...");
 
-        //bitmexHist = getArray(bitmexHist, path);
+        bitmexHist = getArray(bitmexHist, "bitmex5m_521515.txt");
 
         List<Callable<Double[]>> threads = new ArrayList<>();
         long stopwatch = System.currentTimeMillis();
@@ -93,7 +96,9 @@ public class Simulator {
                     }
                 }
 
-                //tradingAlgo();
+                String actionIchimoku = Ichimoku.getResult(array, price, inMarket, entryPrice, ratio);
+                //String actionFibonacci = fibonacci.getResult(array, price, inMarket, entryPrice);
+                tradingAlgo(actionIchimoku);
             }
 
             iterationCount++;
@@ -110,6 +115,30 @@ public class Simulator {
 
         }
 
+
+    }
+
+    private static double[][] getArray(double[][] array, String path) {
+
+        File file1 = new File("" + path);
+        try {
+            Scanner scanner = new Scanner(file1);
+            for (int row = 0; scanner.hasNextLine() && row < array.length; row++) {
+
+                String line = scanner.nextLine();
+
+                double[] arr = Stream.of(line.split(" "))
+                        .mapToDouble(Double::parseDouble)
+                        .toArray();
+
+                array[row] = arr;
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex);
+
+        }
+
+        return array;
 
     }
 
