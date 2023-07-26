@@ -63,8 +63,6 @@ public class Utils {
 
         if (newPPLow == true) {
             return ppArray.get(ppPeriod);
-        } else {
-            return null;
         }
     }
 
@@ -111,6 +109,9 @@ public class Utils {
             return convertedArray;
     }
 
+    public static int getStopLossIndex(double entryPrice, double time, double offset, int candleMinute) {
+        return 0;
+    }
 
     public static String[] splitString(String action) {
         String[] parts = action.split("_");
@@ -126,7 +127,6 @@ public class Utils {
     }
 
     public static double calculateEMA(ArrayList<Double> array, int period) {
-        //ArrayList<Double> array = new ArrayList<>(array1.subList(array1.size()-50, array1.size()));
         double ema = 0;
         double doublePeriod = period;
         double multiplier = 2 / (doublePeriod + 1.0);
@@ -152,12 +152,25 @@ public class Utils {
     }
 
     public static double calculateMACDhist(ArrayList<Double> array) {
+        double macdHist = 0;
+        ArrayList<Double> signalArray = new ArrayList<>();
 
+        for (int i=0; i < 100; i++) {
+            ArrayList<Double> tempArray = new ArrayList<>(array.subList(100+i, array.size()-100+i));
+            double mcadLineTemp = calculateEMA(tempArray, 12) - calculateEMA(tempArray, 26);
+            signalArray.add(mcadLineTemp);
+        }
+        double mcadLine = calculateEMA(array, 12) - calculateEMA(array, 26);
+        signalArray.add(mcadLine);
+        double signalLine = calculateEMA(signalArray, 9);
+        macdHist = mcadLine - signalLine;
+
+        return macdHist;
     }
 
-    public static double calculateATR(ArrayList<double[]> array) {
-
-    }
+    //public static double calculateATR(ArrayList<double[]> array) {
+        
+    //}
 
 
 

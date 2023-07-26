@@ -96,9 +96,9 @@ public class Simulator {
                     }
                 }
 
-                String actionIchimoku = Ichimoku.getResult(array, price, inMarket, entryPrice, ratio);
+                //String actionIchimoku = Ichimoku.getResult(array, price, inMarket, entryPrice, ratio);
                 //String actionFibonacci = fibonacci.getResult(array, price, inMarket, entryPrice);
-                tradingAlgo(actionIchimoku);
+                //tradingAlgo(actionIchimoku);
             }
 
             iterationCount++;
