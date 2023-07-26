@@ -63,6 +63,8 @@ public class Utils {
 
         if (newPPLow == true) {
             return ppArray.get(ppPeriod);
+        } else {
+            return null;
         }
     }
 
@@ -127,6 +129,7 @@ public class Utils {
     }
 
     public static double calculateEMA(ArrayList<Double> array, int period) {
+        //ArrayList<Double> array = new ArrayList<>(array1.subList(array1.size()-50, array1.size()));
         double ema = 0;
         double doublePeriod = period;
         double multiplier = 2 / (doublePeriod + 1.0);
@@ -168,9 +171,49 @@ public class Utils {
         return macdHist;
     }
 
-    //public static double calculateATR(ArrayList<double[]> array) {
-        
-    //}
+    public static double calculateATR(ArrayList<double[]> array) {
+
+        ArrayList<double[]> tempArray = new ArrayList<>();
+        int period = 14;
+        double priorATR = 0;
+        double currentTR = 0;
+        double currentATR = 0;
+
+        for (int i = 0; i < array.size(); i++) {
+            if (i < period) {
+                tempArray.add(array.get(i));
+
+                if (tempArray.size() == period) {
+                    double[] firstCandle = tempArray.get(period-1);
+                    currentTR = firstCandle[2] - firstCandle[3];
+                    ArrayList<Double> tempArray2 = new ArrayList<Double>();
+                    for (int j = 0; j < period - 1; j++) {
+                        double firstATR;
+                        double[] tempCandle = tempArray.get(j);
+                        firstATR = tempCandle[2] - tempCandle[3];
+                        tempArray2.add(firstATR);
+                    }
+                    priorATR = calculateMovingAverage(tempArray2);
+                    tempArray.clear();
+                    tempArray2.clear();
+
+                    currentATR = (((priorATR * (period - 1)) + currentTR)) / period;
+                    //System.out.println(currentATR);
+                }
+
+
+            } else {
+                double[] currentCandle = array.get(i);
+                currentTR = currentCandle[2] - currentCandle[3];
+                currentATR = ((currentATR * (period - 1)) + currentTR) / period;
+
+            }
+
+        }
+
+        return currentATR;
+
+    }
 
 
 
