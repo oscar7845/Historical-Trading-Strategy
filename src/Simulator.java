@@ -5,7 +5,6 @@ import java.util.concurrent.*;
 import java.util.stream.Stream;
 import java.util.Scanner;
 
-
 public class Simulator {
     private static double[][] bitmexHist = new double[521515][5];
 
@@ -159,7 +158,7 @@ public class Simulator {
 
     private static double[][] getArray(double[][] array, String path) {
 
-        File file1 = new File("" + path);
+        File file1 = new File("C:\\vsCode\\historical-trading-strategy\\src\\" + path);
         try {
             Scanner scanner = new Scanner(file1);
             for (int row = 0; scanner.hasNextLine() && row < array.length; row++) {
