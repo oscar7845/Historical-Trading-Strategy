@@ -3,10 +3,10 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
+import java.util.Scanner;
 
 
 public class Simulator {
-
     private static double[][] bitmexHist = new double[521515][5];
 
     private static double iterations;
@@ -31,10 +31,8 @@ public class Simulator {
             threads.add(new simulate(ratio + 0.0001*i));
         }
 
-
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         List<Future<Double[]>> tasks = executorService.invokeAll(threads);
-
 
         System.out.println(tasks.size() + " results\n");
 
@@ -108,14 +106,55 @@ public class Simulator {
         }
 
         private void tradingAlgo(String actionFib) {
+            String action = Utils.splitString(actionFib)[0];
+            double price = Double.parseDouble(Utils.splitString(actionFib)[1]);
+            double time = Double.parseDouble(Utils.splitString(actionFib)[2]);
 
+            if (action.equals("buy") && !inMarket) {
+                submitOrder(true, price, time);
+            }
+
+            if (action.equals("sell") && inMarket) {
+                submitOrder(false, price, time);
+            }
         }
 
         public void submitOrder(boolean status, double price, double time) {
 
+            String date = Utils.convertDate(time);
+
+            if (status && !inMarket) {
+                //buy
+                tradeCount++;
+                inMarket = true;
+                entryPrice = price; //long with leverage
+
+                double fee = balanceBTC  * 0.00085;
+                balanceBTC = (balanceBTC - fee);
+
+
+                if (threadCount == 1) {
+                    System.out.println(tradeCount + ". BTC " + balanceBTC + "       <----------BUY: " + price + "   " + date + "   " );
+                }
+
+                entryPrice = price;
+
+            }
+            if (!status && inMarket) {
+                //sell
+                tradeCount++;
+                inMarket = false;
+
+                balanceBTC = balanceBTC + (balanceBTC) * (entryPrice) * ((1 / entryPrice) - (1 / price));
+                double fee = balanceBTC * 0.00085;
+                balanceBTC = balanceBTC - fee;
+                entryPrice = 0;
+
+                if (threadCount == 1) {
+                    System.out.println(tradeCount + ". BTC " + balanceBTC + "       <----------SELL : " + price + "   " + date);
+                }
+            }
         }
-
-
     }
 
     private static double[][] getArray(double[][] array, String path) {
