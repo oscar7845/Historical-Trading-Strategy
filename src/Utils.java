@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Utils {
-
     public static double getHigh (ArrayList<Double> array) {
         double high = array.get(0);
         for (int i = 0; i < array.size(); i++) {
@@ -112,6 +111,29 @@ public class Utils {
     }
 
     public static int getStopLossIndex(double entryPrice, double time, double offset, int candleMinute) {
+//        int sellPriceIndex = 0;
+//        double[][] bitmex1m = simulator.bitmexHist1m;
+//        int index = 0;
+//
+//        for (int i = 0; i < 679344; i++) {
+//            if (bitmex1m[i][4] == time-(((candleMinute*60)-60)*1000) ) {
+//                index = i;
+//                break;
+//            }
+//        }
+//
+//        for (int i = index; i < index+60; i++) {
+//
+//            if (i < 679344) {
+//                if (bitmex1m[i][1] < entryPrice - offset) {
+//                    sellPriceIndex = i;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        //System.out.println(bitmex1m[index][0] + "  " + bitmex1m[index+59][1]);
+//
         return 0;
     }
 

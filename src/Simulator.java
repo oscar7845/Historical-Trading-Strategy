@@ -5,6 +5,7 @@ import java.util.concurrent.*;
 import java.util.stream.Stream;
 import java.util.Scanner;
 
+
 public class Simulator {
     private static double[][] bitmexHist = new double[521515][5];
 
@@ -16,18 +17,18 @@ public class Simulator {
 
         System.out.println("Simulation starting...");
 
-        bitmexHist = getArray(bitmexHist, "bitmex5m_521515.txt");
+        bitmexHist = getArray(bitmexHist, "bitmex5m_521515.txt"); //import historical data file
 
         List<Callable<Double[]>> threads = new ArrayList<>();
         long stopwatch = System.currentTimeMillis();
 
-        threadCount = 12;
-        iterations = 1000;
-        double ratio = 1.03;
+        threadCount = 12; //specify cpu threadcount
+        iterations = 1000; //number of permutations on test parameter
+        double ratio = 1.03; //test parameter
 
         int i;
         for (i = 0; i < iterations; i++) {
-            threads.add(new simulate(ratio + 0.0001*i));
+            threads.add(new simulate(ratio + 0.0001*i)); //pass test parameter into the simulator
         }
 
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
@@ -56,7 +57,6 @@ public class Simulator {
 
         System.out.println("BTC: " + bestResult[0] + "  Ratio: " + bestResult[1]);
         executorService.shutdown();
-
     }
 
     public static class simulate implements Callable<Double[]> {
@@ -104,10 +104,10 @@ public class Simulator {
             return result;
         }
 
-        private void tradingAlgo(String actionFib) {
-            String action = Utils.splitString(actionFib)[0];
-            double price = Double.parseDouble(Utils.splitString(actionFib)[1]);
-            double time = Double.parseDouble(Utils.splitString(actionFib)[2]);
+        private void tradingAlgo(String tradingAction) {
+            String action = Utils.splitString(tradingAction)[0];
+            double price = Double.parseDouble(Utils.splitString(tradingAction)[1]);
+            double time = Double.parseDouble(Utils.splitString(tradingAction)[2]);
 
             if (action.equals("buy") && !inMarket) {
                 submitOrder(true, price, time);
