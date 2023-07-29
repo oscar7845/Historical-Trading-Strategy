@@ -168,16 +168,12 @@ public class Simulator {
                 double[] arr = Stream.of(line.split(" "))
                         .mapToDouble(Double::parseDouble)
                         .toArray();
-
+                        
                 array[row] = arr;
             }
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
-
         }
-
         return array;
-
     }
-
 }

@@ -1,11 +1,8 @@
 import java.util.ArrayList;
 
 public class Fibonacci {
-
     public static String getResult(ArrayList<double[]> array, double price, boolean inMarket, double entryPrice) {
-
         if (array.size() >= 300) {
-
             int fibPeriod = 20;
 
             ArrayList<double[]> array1 = new ArrayList<>(array.subList(array.size() - fibPeriod, array.size()));
@@ -33,17 +30,12 @@ public class Fibonacci {
             } else if (price >= fibLevels[2]) {
                 //sell
                 return "sell" + "_" + price + "_" + time;
-
             }
             else {
                 return "null_0_0";
             }
-
-
         } else {
             return "null_0_0";
         }
-
     }
-
 }

@@ -9,7 +9,6 @@ public class Ichimoku {
             int B = 52;
             int lead = 26;
 
-
             ArrayList<double[]> array1 = new ArrayList<>(array.subList(array.size() - c, array.size()));
             ArrayList<double[]> array2 = new ArrayList<>(array.subList(array.size() - b, array.size()));
             ArrayList<double[]> array3 = new ArrayList<>(array.subList(array.size() - B - lead, array.size() - lead));
@@ -38,7 +37,6 @@ public class Ichimoku {
                 double currentATR = Utils.calculateATR(array);
                 array.remove(array.size() - 1);
                 double mcadHistPrev = Utils.calculateMACDhist(Utils.convertTo1D(array, 1));
-
 
                 if (!inMarket && mcadHist > -31 && mcadHist < 1) {
                     return "buy" + "_" + price + "_" + time;
