@@ -8,7 +8,7 @@ It can be helpful to see how strategies would have performed in the past and det
 Historical data is stored in the .txt file and is processed and stored in a 2D array format. 
 Ichimoku Strategy: this is the primary strategy used and the method evaluates trading decisions using the Ichimoku cloud technique.
 Fibonacci Strategy: it assesses trading decisions based on Fibonacci retracement levels derived from price data.
-The Utility class contains the utility functions which are needed for financial calculations. Some used are moving averages, Fibonacci retracement, andd MACD histogram calculations.
+The Utility class contains the utility functions which are needed for financial calculations. Some used are moving averages, Fibonacci retracement, and MACD histogram calculations.
 Finally, the Simulator class employs multithreading, running multiple scenarios simultaneously, and optimizing based on the parameters provided. In this class, during the passing of testing parameters into the simulator, we are incrementing 'ratio' by 0.0001, 1000 times, and run a simulation on each to see how it impacts the trading strategy. This means the simulator will run 1000 times and return the best ratio for this particular strategy
 ```sh
         for (i = 0; i < iterations; i++) {
@@ -24,7 +24,7 @@ The simulator's logic is implemented using Java. Ichimoku, Fibonacci, and Utils 
 Major challenges were dealing with vast amounts of historical data, and multithreading as it added some challenges in synchronization and resource optimization. I also wanted to keep the application simple so that it could be customized.
 
 ## Things learned
- Learned to apply and modify trading methods like Ichimoku and Fibonacci,and handle multiple tasks at once. Actually got to see how past data gives clues about future trading decisions, even in very volatile markets.
+ Learned to apply and modify trading methods like Ichimoku and Fibonacci ,and handle multiple tasks at once. Actually got to see how past data gives clues about future trading decisions, even in very volatile markets.
 
 ## Roadmap
 Future things to do are new trading strategies and indicators, a visual representation of backtesting results, and advanced statistical metrics beyond just profitability.
